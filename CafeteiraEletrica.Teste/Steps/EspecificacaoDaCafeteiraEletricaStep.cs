@@ -206,7 +206,7 @@ namespace CafeteiraEletrica.Teste.Steps
         [Then(@"o café está pronto para o consumo")]
         public void ThenOCafeEstaProntoParaOConsumo()
         {
-            throw new PendingStepException();
+            _coffeeMakerApi.SetIndicatorState(IndicatorState.ON);
         }
 
         [Then(@"o ciclo de preparo e finalizado")]
