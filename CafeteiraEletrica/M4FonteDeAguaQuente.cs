@@ -31,7 +31,6 @@ namespace CafeteiraEletrica
         private protected override void PreparoConcluido()
         {
             if (EstaPreparando && _api.GetBoilerStatus() == BoilerStatus.EMPTY) {
-                //EstaPreparando = false;
                 _api.SetBoilerState(BoilerState.OFF);
                 _api.SetReliefValveState(ReliefValveState.OPEN);
                 FinalizaPreparo();
@@ -55,6 +54,7 @@ namespace CafeteiraEletrica
 
         internal override void EncerraCiclo()
         {
+            EstaPreparando = false;
             return;
         }
 

@@ -26,6 +26,6 @@ namespace CafeteiraEletrica
         }
 
         internal abstract void FinalizaPreparo();
-
+        internal abstract void EncerraCiclo();
     }
 }

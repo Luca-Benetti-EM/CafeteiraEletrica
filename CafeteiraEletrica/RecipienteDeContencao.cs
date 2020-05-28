@@ -40,6 +40,7 @@ namespace CafeteiraEletrica
         private protected void EncerraCiclo()
         {
             _fonteDeAguaQuente.EncerraCiclo();
+            _interfaceDoUsuario.EncerraCiclo();
         }
 
         internal abstract void FinalizaPreparo();

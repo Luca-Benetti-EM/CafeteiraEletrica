@@ -24,6 +24,12 @@ namespace CafeteiraEletrica
             }
         }
 
+        internal override void EncerraCiclo()
+        {
+            _api.SetIndicatorState(IndicatorState.OFF);
+            return;
+        }
+
         internal override void FinalizaPreparo()
         {
             _api.SetIndicatorState(IndicatorState.ON);
