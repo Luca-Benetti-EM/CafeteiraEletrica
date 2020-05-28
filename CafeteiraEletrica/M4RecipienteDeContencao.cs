@@ -60,7 +60,7 @@ namespace CafeteiraEletrica
 
 
         private protected override void RecipienteConsumidoCompleto() { 
-            if(!EstaPreparando && _api.GetWarmerPlateStatus() == WarmerPlateStatus.WARMER_EMPTY)
+            if(!EstaPreparando && _api.GetWarmerPlateStatus() != WarmerPlateStatus.POT_NOT_EMPTY)
             {
                 EstaPreparando = false;
                 _api.SetWarmerState(WarmerState.OFF);
