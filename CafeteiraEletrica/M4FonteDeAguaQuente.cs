@@ -39,5 +39,10 @@ namespace CafeteiraEletrica
             _api.SetBoilerState(BoilerState.ON);
             _api.SetReliefValveState(ReliefValveState.CLOSED);
         }
+
+        internal override void RetomeProducao()
+        {
+            Prepare();
+        }
     }
 }

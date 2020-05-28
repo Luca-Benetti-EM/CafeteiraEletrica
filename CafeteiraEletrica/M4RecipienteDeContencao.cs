@@ -38,9 +38,22 @@ namespace CafeteiraEletrica
             InterrompaProducao();
         }
 
+        private protected override void RecipienteDeContencaoDevolvido()
+        {
+            if (!EstaPreparando && _api.GetWarmerPlateStatus() != WarmerPlateStatus.WARMER_EMPTY)
+            {
+                Prepare();
+                RetomeProducao();
+            }
+
+            return;
+                
+        }
+
         public void Preparando()
         {
             RecipienteDeContencaoRemovido();
+            RecipienteDeContencaoDevolvido();
         }
     }
 }
