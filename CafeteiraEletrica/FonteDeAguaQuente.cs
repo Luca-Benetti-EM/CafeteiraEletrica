@@ -10,6 +10,7 @@ namespace CafeteiraEletrica
     {
         private RecipienteDeContencao _recipienteDeContencao;
         private InterfaceDoUsuario _interfaceDoUsuario;
+        protected bool EstaPreparando;
 
         public void Inicio(InterfaceDoUsuario interfaceDoUsuario, RecipienteDeContencao recipienteDeContencao)
         {
@@ -18,9 +19,18 @@ namespace CafeteiraEletrica
         }
 
         protected internal abstract bool EstaPronto { get; }
-
         internal abstract void Prepare();
         internal abstract void InterrompaProducao();
         internal abstract void RetomeProducao();
+
+        internal abstract void EncerraCiclo();
+
+        private protected void FinalizaPreparo()
+
+        {
+            _recipienteDeContencao.FinalizaPreparo();
+            _interfaceDoUsuario.FinalizaPreparo();
+        }
+        private protected abstract void PreparoConcluido();
     }
 }

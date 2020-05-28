@@ -23,5 +23,10 @@ namespace CafeteiraEletrica
                 Iniciar();
             }
         }
+
+        internal override void FinalizaPreparo()
+        {
+            _api.SetIndicatorState(IndicatorState.ON);
+        }
     }
 }

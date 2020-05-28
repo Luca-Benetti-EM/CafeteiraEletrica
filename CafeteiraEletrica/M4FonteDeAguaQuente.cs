@@ -25,7 +25,19 @@ namespace CafeteiraEletrica
 
         public void Preparando()
         {
-            throw new NotImplementedException();
+            PreparoConcluido();
+        }
+
+        private protected override void PreparoConcluido()
+        {
+            if (EstaPreparando && _api.GetBoilerStatus() == BoilerStatus.EMPTY) {
+                //EstaPreparando = false;
+                _api.SetBoilerState(BoilerState.OFF);
+                _api.SetReliefValveState(ReliefValveState.OPEN);
+                FinalizaPreparo();
+            }
+
+            return;
         }
 
         internal override void InterrompaProducao()
@@ -36,8 +48,14 @@ namespace CafeteiraEletrica
 
         internal override void Prepare()
         {
+            EstaPreparando = true;
             _api.SetBoilerState(BoilerState.ON);
             _api.SetReliefValveState(ReliefValveState.CLOSED);
+        }
+
+        internal override void EncerraCiclo()
+        {
+            return;
         }
 
         internal override void RetomeProducao()

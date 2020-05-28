@@ -30,17 +30,25 @@ namespace CafeteiraEletrica
             _api.SetWarmerState(WarmerState.ON);
         }
 
+        internal override void FinalizaPreparo() {
+            EstaPreparando = false;
+        }
+
         private protected override void RecipienteDeContencaoRemovido()
         {
-            if (EstaPreparando && _api.GetWarmerPlateStatus() != WarmerPlateStatus.WARMER_EMPTY) return;
+            if (EstaPreparando && _api.GetWarmerPlateStatus() == WarmerPlateStatus.WARMER_EMPTY)
+            {
+                _api.SetWarmerState(WarmerState.OFF);
+                InterrompaProducao();
+            }
 
-            _api.SetWarmerState(WarmerState.OFF);
-            InterrompaProducao();
+            return;
+            
         }
 
         private protected override void RecipienteDeContencaoDevolvido()
         {
-            if (!EstaPreparando && _api.GetWarmerPlateStatus() != WarmerPlateStatus.WARMER_EMPTY)
+            if (EstaPreparando && _api.GetWarmerPlateStatus() != WarmerPlateStatus.WARMER_EMPTY)
             {
                 Prepare();
                 RetomeProducao();
@@ -50,10 +58,23 @@ namespace CafeteiraEletrica
                 
         }
 
+
+        private protected override void RecipienteConsumidoCompleto() { 
+            if(!EstaPreparando && _api.GetWarmerPlateStatus() == WarmerPlateStatus.WARMER_EMPTY)
+            {
+                EstaPreparando = false;
+                _api.SetWarmerState(WarmerState.OFF);
+                EncerraCiclo();
+            }
+
+            return;
+        }
+
         public void Preparando()
         {
             RecipienteDeContencaoRemovido();
             RecipienteDeContencaoDevolvido();
+            RecipienteConsumidoCompleto();
         }
     }
 }

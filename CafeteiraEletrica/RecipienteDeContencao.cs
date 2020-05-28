@@ -18,7 +18,6 @@ namespace CafeteiraEletrica
             _fonteDeAguaQuente = fonteDeAguaQuente;
         }
 
-
         protected internal abstract bool EstaPronto { get; }
 
         internal abstract void Prepare();
@@ -26,7 +25,9 @@ namespace CafeteiraEletrica
 
         private protected abstract void RecipienteDeContencaoDevolvido();
 
-        private protected  void InterrompaProducao()
+        private protected abstract void RecipienteConsumidoCompleto();
+
+        private protected void InterrompaProducao()
         {
             _fonteDeAguaQuente.InterrompaProducao();
         }
@@ -35,5 +36,12 @@ namespace CafeteiraEletrica
         {
             _fonteDeAguaQuente.RetomeProducao();
         }
+
+        private protected void EncerraCiclo()
+        {
+            _fonteDeAguaQuente.EncerraCiclo();
+        }
+
+        internal abstract void FinalizaPreparo();
     }
 }
